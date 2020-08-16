@@ -5,6 +5,9 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const sse = require("./sse");
+const webSocket = require("./socket");
+
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -45,8 +48,8 @@ app.use(flash());
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 
-app.use((req, res, next) => {
-  const err = new Error("Not Found");
+app.use((error, req, res, next) => {
+  const err = new Error("Not Found", error);
   err.status = 404;
   next(err);
 });
@@ -58,6 +61,9 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), "번 포트에서 대기 중");
 });
+
+webSocket(server, app);
+sse(server);
