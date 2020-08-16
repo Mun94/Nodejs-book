@@ -7,7 +7,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const sse = require("./sse");
 const webSocket = require("./socket");
-
+const checkAuction = require("./checkAuction");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -18,6 +18,7 @@ const passportConfig = require("./passport");
 const app = express();
 sequelize.sync();
 passportConfig(passport);
+checkAuction();
 
 const sessionMiddleware = session({
   resave: false,
