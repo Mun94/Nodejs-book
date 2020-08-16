@@ -1,0 +1,32 @@
+doctype
+html
+        head
+            meta(charset='utf-8')
+            title= title
+            link(rel='stylesheet' href='/main.css')
+        body
+            .container
+                .profile-wrap
+                    .profile
+                        if user && user.id
+                            .user-name= '안녕하세요!' + user.nick + '님'
+                            .user-money= '보유 자산:' + user.money + '원'
+                            input#my-id(type='hidden' value=user.id)
+                            a#logout.btn(href='/auth/logout') 로그아웃
+                            a#register.btn(href='/good') 상품 등록
+                        else
+                            form#login-form(action='/auth/login' method='post')
+                                .input-group
+                                    label(for='email') 이메일
+                                    input#email(type='email' name='email' required autofocus)
+                                .input-group
+                                    label(for='password') 비밀번호
+                                    input#password(type='password' name='password' required)
+                                if loginError
+                                    .error-message= inginError
+                                a#join.btn(href='/join') 회원가입
+                                button#login.btn(type='submit') 로그인
+                    footer
+                        | Made by&nbsp;
+                    block good
+                block content
