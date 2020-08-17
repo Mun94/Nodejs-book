@@ -1,7 +1,7 @@
 {
   "name": "git-chat",
   "version": "1.0.0",
-  "description": "웹 소켓",
+  "description": "웹 소켓.",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app",
